@@ -16,7 +16,7 @@ def Parameters():
     
     #Run numbers for root imagery
     #Runs 4&5 are roots without fertilizer and Runs 6&7 are with fertilizer
-    run_nums = [6,7] 
+    run_nums = [1,2] 
     
     #Pick repetitions to train and test on (total of four runs, 1 to 4)
     train_reps = [1,2,3]
@@ -35,7 +35,7 @@ def Parameters():
     
     #Set days after planting (DAP) to use, either 'last' for last DAP or 'all'
     #for all images after 
-    DAP = 'last'
+    # DAP = 'last'
     
     #Preprocessing (smoothing) of image before downsampling
     #Can either use 'gauss' (gaussian blur, default), 'avg' (average filter), or
