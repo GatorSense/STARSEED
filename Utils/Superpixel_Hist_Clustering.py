@@ -10,7 +10,7 @@ import time
 from skimage.measure import regionprops
 from skimage import color
 from itertools import combinations
-from Utils.Relational_Clustering import Generate_Relational_Clustering
+from Utils.EMD_Clustering import Generate_EMD_Clustering
 from Utils.Compute_fractal_dim import fractal_dimension
 from Utils.Compute_EMD import compute_EMD
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -85,14 +85,9 @@ def Generate_SP_profile(X,numSP=200,lab=False,features='fractal',equal_weight=Fa
         if np.count_nonzero(temp_sp_img) == 0:
             pref_count += 1
         
-        #Compute weight for EMD
-        # weight = props.area/(X.shape[0]*X.shape[1])
-        weight = np.count_nonzero(temp_sp_img)/props.area
-        
         if features == 'fractal':
-            # if props.label == 50:
-            #     pdb.set_trace()
             feat = fractal_dimension(temp_sp_img,min_dim=min_size,root_only=root_only)
+        
         elif features == 'lacunarity':
             feat = fractal_dimension(temp_sp_img,min_dim=min_size,compute_lac=True,
                                      root_only=root_only)[-1]
@@ -101,8 +96,7 @@ def Generate_SP_profile(X,numSP=200,lab=False,features='fractal',equal_weight=Fa
             # aggregate or use features to generate SP segmentation
             if lab:
                 # RGB counts 3
-                # feat = np.count_nonzero(temp_sp_img)/3 
-                feat = np.count_nonzero(temp_sp_img)/(3*props.area) #Check if we should divide by 3
+                feat = np.count_nonzero(temp_sp_img)/(3*props.area) 
             else:
                 # feat = np.count_nonzero(temp_sp_img)
                 feat = np.count_nonzero(temp_sp_img)/props.area
@@ -119,8 +113,6 @@ def Generate_SP_profile(X,numSP=200,lab=False,features='fractal',equal_weight=Fa
             assert \
                 f'Feature not currently supported'
                 
-        #If root only true, set SP to roots with 
-           
         #Assign values to SP_profile
         if lab:
             #Nx6, bin value, spatial, average RGB
@@ -143,9 +135,6 @@ def Generate_SP_profile(X,numSP=200,lab=False,features='fractal',equal_weight=Fa
     # value should be the weight for the bin
     SP_profile = np.stack(SP_profile,axis=0)
  
-    #Compute preference value-percentage
-    Pref_value = pref_count/len(SP_profile)
-
    #Normalize values if desired
     if norm_vals == 'all_feats':
         # #Normalize count to be between 0 and 1 for feature values (don't consider weights)
@@ -170,7 +159,7 @@ def Generate_SP_profile(X,numSP=200,lab=False,features='fractal',equal_weight=Fa
     SP_profile[:,-2::] = spatial_wt*SP_profile[:,-2::]
     
     return {'SP_profile': SP_profile, 'SP_mask': SP_mask, 'Root_mask': Root_mask,
-            'Img': X, 'Preference': Pref_value}
+            'Img': X}
 
 def Generate_Pairwise_EMD(data_profiles,root_only=True):
     #Compute pairwise EMD between images for 1) entire dataset or 2) test/train
@@ -194,20 +183,18 @@ def Generate_Pairwise_EMD(data_profiles,root_only=True):
 def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
                   folder='Cluster_Imgs_SP/', embed='TSNE',split_data=False,
                   features='fractal',seed=42,embed_only=False,equal_weight=False,
-                  alpha=1,normalize='all_feats',root_only=True,set_preferences=False,
-                  adjusted=True,num_neighbors=15,label_type='Unsupervised', vis_fig_type='Image',
+                  alpha=1,normalize='all_feats',root_only=True,num_neighbors=15,
+                  label_type='Unsupervised', vis_fig_type='Image',
                   score_metric='Scatter'):
 
     start = time.time()
     
     #Change dataset(s) to SP profile
     train_data = []
-    train_prefs = []
     train_water_levels = dataset['train']['water_level_labels'].tolist()
     train_cultivar = dataset['train']['cultivar_labels'].tolist()
     train_names = dataset['train']['train_names'].tolist()
     test_data = []
-    test_prefs = []
     test_water_levels = dataset['test']['water_level_labels'].tolist()
     test_cultivar = dataset['test']['cultivar_labels'].tolist()
     test_names = dataset['test']['test_names'].tolist()
@@ -225,12 +212,10 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
             train_data.append(Generate_SP_profile(dataset['train']['data'][img],
                               numSP=numSP,features=features,equal_weight=equal_weight,
                               spatial_wt=alpha,norm_vals=normalize,root_only=root_only))
-            train_prefs.append(train_data[-1]['Preference'])
         else:
             test_data.append(Generate_SP_profile(dataset['test']['data'][img-train_idx[-1]-1],
                              numSP=numSP,features=features,equal_weight=equal_weight,
                              spatial_wt=alpha,norm_vals=normalize,root_only=root_only))
-            test_prefs.append(test_data[-1]['Preference'])
     
     temp_stop = time.time() - temp_start
     print('Generated SP profiles in {:.0f}m {:.0f}s'.format(temp_stop // 60, 
@@ -248,14 +233,9 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
     print('Computed distances in {:.0f}m {:.0f}s'.format(temp_stop // 60, 
                                                            temp_stop % 60))
     
-    #Set preferences to values of percentage of root superpixels or default to median
-    if set_preferences:
-        pref_vals = train_prefs+test_prefs
-    else:
-        pref_vals = None
    
     if embed_only:
-        embedding = Generate_Relational_Clustering(EMD_mat,
+        embedding = Generate_EMD_Clustering(EMD_mat,
                                        train_data+test_data,
                                        train_cultivar+test_cultivar,
                                        train_water_levels+test_water_levels,
@@ -263,10 +243,9 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
                                        folder=folder,numSP=numSP,seed=seed,
                                        split_data=split_data,train_idx=train_idx,
                                        test_idx=test_idx,
-                                       num_imgs=num_imgs,embed_only=embed_only,
+                                       embed_only=embed_only,
                                        root_only=root_only,
-                                       preferences=pref_vals,
-                                       adjusted=adjusted,num_neighbors=num_neighbors,
+                                       num_neighbors=num_neighbors,
                                        label_type=label_type,
                                        vis_fig_type=vis_fig_type,features=features) 
             
@@ -279,7 +258,7 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
     
     else:
         #Perform relational clustering
-        EMD_scores, Cluster_scores, labels = Generate_Relational_Clustering(EMD_mat,
+        EMD_scores, labels = Generate_EMD_Clustering(EMD_mat,
                                        train_data+test_data,
                                        train_cultivar+test_cultivar,
                                        train_water_levels+test_water_levels,
@@ -287,9 +266,7 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
                                        folder=folder,numSP=numSP,seed=seed,
                                        split_data=split_data,train_idx=train_idx,
                                        test_idx=test_idx,
-                                       num_imgs=num_imgs,embed_only=embed_only,
-                                       preferences=train_prefs+test_prefs,
-                                       adjusted=adjusted,num_neighbors=num_neighbors,
+                                       num_neighbors=num_neighbors,
                                        label_type=label_type,
                                        vis_fig_type=vis_fig_type,
                                        score_metric=score_metric,
@@ -299,6 +276,6 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
         
         print('Clustering finished in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
         
-        # return outputs: EMD SI index, cluster indices, and trustworthiness
-        return EMD_scores, Cluster_scores, labels
+        # return outputs: EMD score index and labels
+        return EMD_scores, labels
     

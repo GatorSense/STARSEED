@@ -1,8 +1,8 @@
  # -*- coding: utf-8 -*-
 """
 Created on Tue Feb 25 09:13:56 2020
-Main script to cluster root structure
-images using superpixel histogram images
+Main script to analyze root structures 
+images using superpixel histogram images and EMD
 @author: jpeeples
 """
 from Utils.Load_Data import load_data
@@ -12,7 +12,6 @@ import pandas as pd
 from Utils.Visualization import get_SP_plot_SI, plot_global_feats
 import numpy as np
 import matplotlib.pyplot as plt
-import pdb
 
 plt.ioff()
 
@@ -64,8 +63,8 @@ for ds_type in Params['ds_methods']:
     #Generate dataset for fold
     dataset = load_data(Params['csv_dir'],Params['img_dir'],Params['run_nums'],
                         train_reps=Params['train_reps'],test_reps=Params['test_reps'], 
-                        DAP=Params['DAP'], mode=Params['mode'],
-                        preprocess=Params['preprocess'],downsample=Params['downsample'],
+                        mode=Params['mode'],preprocess=Params['preprocess'],
+                        downsample=Params['downsample'],
                         ds_factor=Params['ds_factor'],ds_type=ds_type)
     
     feat_count = 0
@@ -85,28 +84,22 @@ for ds_type in Params['ds_methods']:
             count = 0
             results_folder = (Params['results_location'] + feature + '/' + ds_type + '/')
             
-            SP_folder = (results_folder + Params['preprocess'] + '/' + Params['mode'] +'_Run_' +
-                         str(Params['run_nums']) + '_Random_State_' + str(Params['seed']) + '/' + label + '/')
-            cultivar_silhoutte = []
-            water_levels_silhoutte = []
-            cross_silhoutte = []
-            cluster_silhoutte = []
-            AP_cluster_scores = []
-            cultivar_cp_scores = []
-            water_cp_scores = []
-            cross_cp_scores = []
-            cultivar_hg_scores = []
-            water_hg_scores = []
-            cross_hg_scores = []
-            cultivar_v_scores = []
-            water_v_scores = []
-            cross_v_scores = []
+            if Params['embed'] == 'UMAP':
+                SP_folder = (results_folder + Params['preprocess'] + '/' + Params['mode'] +'_Run_' +
+                             str(Params['run_nums']) + '_Random_State_' + str(Params['seed']) + '/' + label + '/')
+            else:
+                SP_folder = (results_folder + Params['preprocess'] + '/' + Params['mode'] +'_Run_' +
+                             str(Params['run_nums']) + '_Random_State_' + str(Params['seed']) + '/' )
+                
+            cultivar_score = []
+            water_levels_score = []
+            cross_score = []
+          
             
             for SP in num_SP:
 
-                scores, cluster_scores, true_labels = SP_clustering(dataset,numSP=SP,
+                scores, true_labels = SP_clustering(dataset,numSP=SP,
                                                        mode=Params['mode'],
-                                                       num_imgs=Params['num_imgs'],
                                                        folder=SP_folder + 'SP_'+ str(SP) + 
                                                        '/', embed = Params['embed'],
                                                        split_data=Params['split_data'],
@@ -115,28 +108,15 @@ for ds_type in Params['ds_methods']:
                                                        alpha=Params['alpha'],
                                                        normalize=Params['norm_method'],
                                                        root_only=Params['root_only'],
-                                                       set_preferences=Params['set_preferences'],
-                                                       adjusted=Params['adjusted'],
                                                        num_neighbors=Params['num_neighbors'],
                                                        label_type=label,
                                                        vis_fig_type=Params['vis_fig_type'],
                                                        score_metric=Params['score_metric'])
                 
                 #Save scores for plotting
-                cultivar_silhoutte.append(scores['cultivar'])
-                water_levels_silhoutte.append(scores['water_levels'])
-                cross_silhoutte.append(scores['cross_treatment'])
-                cluster_silhoutte.append(scores['clustering'])
-                AP_cluster_scores.append(cluster_scores['Affinity_Propagation'])
-                cultivar_cp_scores.append(cluster_scores['Affinity_Propagation']['Cultivar'][1])
-                water_cp_scores.append(cluster_scores['Affinity_Propagation']['Water_Levels'][1])
-                cross_cp_scores.append(cluster_scores['Affinity_Propagation']['Cross_Treatment'][1])
-                cultivar_hg_scores.append(cluster_scores['Affinity_Propagation']['Cultivar'][0])
-                water_hg_scores.append(cluster_scores['Affinity_Propagation']['Water_Levels'][0])
-                cross_hg_scores.append(cluster_scores['Affinity_Propagation']['Cross_Treatment'][0])
-                cultivar_v_scores.append(cluster_scores['Affinity_Propagation']['Cultivar'][2])
-                water_v_scores.append(cluster_scores['Affinity_Propagation']['Water_Levels'][2])
-                cross_v_scores.append(cluster_scores['Affinity_Propagation']['Cross_Treatment'][2])
+                cultivar_score.append(scores['cultivar'])
+                water_levels_score.append(scores['water_levels'])
+                cross_score.append(scores['cross_treatment'])
     
                 #Iterate counter
                 count  += 1
@@ -144,58 +124,50 @@ for ds_type in Params['ds_methods']:
                 print('Finished {} of {} values for Superpixels'.format(count,len(num_SP)))
                   
             # #Generate plots to show accuracy as number of superpixels is varied
-            cultivar_silhoutte = np.array(cultivar_silhoutte)
-            water_levels_silhoutte = np.array(water_levels_silhoutte)
-            cross_silhoutte = np.array(cross_silhoutte)
-            # cluster_silhoutte = np.array(cluster_silhoutte)
+            cultivar_score = np.array(cultivar_score)
+            water_levels_score = np.array(water_levels_score)
+            cross_score = np.array(cross_score)
             
-            get_SP_plot_SI(cultivar_silhoutte[:,-1],num_SP,title_type='Cultivar',
+            get_SP_plot_SI(cultivar_score[:,-1],num_SP,title_type='Cultivar',
                            folder=SP_folder,metric=Params['score_metric'])
-            get_SP_plot_SI(water_levels_silhoutte[:,-1],num_SP,title_type='Water Levels',
+            get_SP_plot_SI(water_levels_score[:,-1],num_SP,title_type='Water Levels',
                            folder=SP_folder,metric=Params['score_metric'])
-            get_SP_plot_SI(cross_silhoutte[:,-1],num_SP,title_type='Cross Treatments',
+            get_SP_plot_SI(cross_score[:,-1],num_SP,title_type='Cross Treatments',
                            folder=SP_folder,metric=Params['score_metric'])
-            # get_SP_plot_SI(cluster_silhoutte[:,-1],num_SP,title_type='Affinity Propagation',folder=SP_folder,metric=score_metric)
-            # get_Cluster_metrics_plots(AP_cluster_scores,num_SP,title_type='Affinity Propagation',folder=SP_folder,
-            #                           adjusted=adjusted)
 
             #Save out max scores (maybe average later)
-            score_table[feat_count, :, 0] = (np.mean(cultivar_silhoutte[:,-1]), 
-                                             np.mean(water_levels_silhoutte[:,-1]), 
-                                             np.mean(cross_silhoutte[:,-1]),
-                                             np.mean(cluster_silhoutte[0]))
-            score_table[feat_count, :, 1] = (np.std(cultivar_silhoutte[:,-1]), 
-                                             np.std(water_levels_silhoutte[:,-1]), 
-                                             np.std(cross_silhoutte[:,-1]),
-                                             np.std(cluster_silhoutte[0]))
-            score_table[feat_count, :, 2] = (np.max(cultivar_silhoutte[:,-1]), 
-                                             np.max(water_levels_silhoutte[:,-1]), 
-                                             np.max(cross_silhoutte[:,-1]),
-                                             np.max(cluster_silhoutte[0]))
-            sp_table[feat_count, :] = (num_SP[np.argmax(cultivar_silhoutte[:,-1])], 
-                                             num_SP[np.argmax(water_levels_silhoutte[:,-1])], 
-                                             num_SP[np.argmax(cross_silhoutte[:,-1])],
-                                             num_SP[0])
-                                             #num_SP[np.argmax(cluster_silhoutte[0])])
+            score_table[feat_count, :, 0] = (np.mean(cultivar_score[:,-1]), 
+                                             np.mean(water_levels_score[:,-1]), 
+                                             np.mean(cross_score[:,-1]))
+            score_table[feat_count, :, 1] = (np.std(cultivar_score[:,-1]), 
+                                             np.std(water_levels_score[:,-1]), 
+                                             np.std(cross_score[:,-1]))
+            score_table[feat_count, :, 2] = (np.max(cultivar_score[:,-1]), 
+                                             np.max(water_levels_score[:,-1]), 
+                                             np.max(cross_score[:,-1]))
+            sp_table[feat_count, :] = (num_SP[np.argmax(cultivar_score[:,-1])], 
+                                             num_SP[np.argmax(water_levels_score[:,-1])], 
+                                             num_SP[np.argmax(cross_score[:,-1])])
+                                       
             
             label_count +=1
             print('Finished {} of {} label types'.format(label_count,len(Params['label_types'])))           
             
       
-        #Visualize global feature results
+        #Visualize global feature results (e.g., no spatial information)
         plot_global_feats(dataset,feature,SP_folder+'Global_Visuals/',seed=Params['seed'],
                           root_only=Params['root_only'])
         
         #Save out results for each class across each feature
         #Save all values out as np array
-        np.save(SP_folder+'{}_Scores'.format('Cultivar'),cultivar_silhoutte)
-        np.save(SP_folder+'{}_Scores'.format('Water Levels'),water_levels_silhoutte)
-        mean_feats_cultivar.append(np.mean(cultivar_silhoutte,axis=0))
-        std_feats_cultivar.append(np.std(cultivar_silhoutte,axis=0))
-        max_feats_cultivar.append(np.max(cultivar_silhoutte,axis=0))
-        mean_feats_water.append(np.mean(water_levels_silhoutte,axis=0))
-        std_feats_water.append(np.std(water_levels_silhoutte,axis=0))
-        max_feats_water.append(np.max(water_levels_silhoutte,axis=0))
+        np.save(SP_folder+'{}_Scores'.format('Cultivar'),cultivar_score)
+        np.save(SP_folder+'{}_Scores'.format('Water Levels'),water_levels_score)
+        mean_feats_cultivar.append(np.mean(cultivar_score,axis=0))
+        std_feats_cultivar.append(np.std(cultivar_score,axis=0))
+        max_feats_cultivar.append(np.max(cultivar_score,axis=0))
+        mean_feats_water.append(np.mean(water_levels_score,axis=0))
+        std_feats_water.append(np.std(water_levels_score,axis=0))
+        max_feats_water.append(np.max(water_levels_score,axis=0))
     
         feat_count += 1
         print('Finished {} of {} features'.format(feat_count,len(Params['features'])))

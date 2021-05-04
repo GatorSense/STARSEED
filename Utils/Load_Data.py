@@ -32,9 +32,9 @@ def extract_features(X,preprocess = 'avg',mode='rgb'):
 
 #Need to clean up, make one function for DAP variations
 def load_data(csv_dir,img_dir,run_nums,train_reps = [1,2,3],test_reps = [4], 
-              DAP='last',mode='bw',preprocess = 'avg',downsample=False,ds_factor=16,
+              mode='bw',preprocess = 'avg',downsample=False,ds_factor=16,
               ds_type='No_Pool'):
-    import pdb; pdb.set_trace()
+
     print('Loading dataset...')
     start = time.time()
     #Load tube number key csv file
@@ -61,10 +61,6 @@ def load_data(csv_dir,img_dir,run_nums,train_reps = [1,2,3],test_reps = [4],
     for run in run_nums:
         run_dir = os.path.join(img_dir, 'Run' + str(run))
        
-        # #Select data based on all DAP or just the last day
-        # root, sub_dirs, _ = next(os.walk(run_dir))
-        # sub_dirs = natsort.natsorted(sub_dirs)
-            
         #Grab gray images and labels
         for fname in natsort.natsorted(os.listdir(os.path.join(run_dir,'GT'))):
             img = Image.open(os.path.join(run_dir,'GT', fname)).convert('RGB')
@@ -142,25 +138,12 @@ def load_data(csv_dir,img_dir,run_nums,train_reps = [1,2,3],test_reps = [4],
     
     print('Loaded dataset in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     
-    #Print information about dataset (TBD):
-
+    #Print information about dataset:
+    print('Total Number of Images: {}'.format(len(training_data)+len(testing_data)))
+    print('Water Levels: {}'.format(np.unique(training_labels_water_level)*100))
+    print('Cultivar: {}'.format(np.unique(training_labels_cultivar)))
     return dataset
         
-
-# Test code 
-if __name__ == "__main__":
-    #Load data
-    csv_dir = 'T:/Fractal_Images/TubeNumberKey.csv'
-    img_dir = 'T:/Fractal_Images/'
-    run_nums = [4,5]
-    mode = 'rgb' #rgb or bw
-    DAP = 'last' #last or all
-    train_reps = [1,2,3]
-    test_reps = [4]
-    preprocess = None
-    
-    dataset = load_data(csv_dir,img_dir,run_nums,train_reps = train_reps,
-                        test_reps = test_reps, DAP=DAP,mode=mode,preprocess=None)
                                        
                     
                     

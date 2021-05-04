@@ -12,7 +12,7 @@ def Parameters():
     img_dir = './Data/'
     
     #Directory desired for results
-    results_folder = 'Updated_Results/Percent_Flow_Root_Lac_New/'
+    results_folder = 'Results/'
     
     #Run numbers for root imagery
     #Runs 4&5 are roots without fertilizer and Runs 6&7 are with fertilizer
@@ -26,16 +26,12 @@ def Parameters():
     #SP_min: smallest number of super pixels to consider
     #SP_step: incremement between SP_max and SP_min
     #SP_max: largest number of super pixels to consider
-    SP_min = 2000
+    SP_min = 100
     SP_step = 100
     SP_max = 2000
     
-    #Set data type, can run code on 'rgb' or 'bw' ('bw' is default, binary data)
-    mode = 'bw' #rgb or bw
-    
-    #Set days after planting (DAP) to use, either 'last' for last DAP or 'all'
-    #for all images after 
-    # DAP = 'last'
+    #Set data type, can run code on 'rgb' or 'bw' ('bw' is recommended, binary data)
+    mode = 'bw' 
     
     #Preprocessing (smoothing) of image before downsampling
     #Can either use 'gauss' (gaussian blur, default), 'avg' (average filter), or
@@ -44,12 +40,11 @@ def Parameters():
     
     #Either use 'root_pixels','fractal', 'lacunarity', all' (use all three texture features
     #at once)
-    features = ['root_pixels']
+    features = ['root_pixels', 'fractal', 'lacunarity']
     
     #Set labels of interest, currently have for labels:
     # 1) Cultivar, 2) Water Levels, 3) Cross Treatments (Cultivar and Water Levels),
-    # 4) Cluster (from Affinity Propagation algorithm)
-    labels = ['Cultivar', 'Water Levels', 'Cross Treatments', 'Cluster']
+    labels = ['Cultivar', 'Water Levels', 'Cross Treatments']
     
     #Normalization options for features (results obtained without normalization): 
     # 1) 'no_norm': no normalziation of features (default)
@@ -60,34 +55,28 @@ def Parameters():
     norm_method = 'no_norm'
     
     #Downsampling options for images:
-    # 1) 'No_Pool': decimate  
+    # 1) 'No_Pool': decimate neighboring pixels
+    # 2) 'Avg_Pool': compute average of neighboring pixels
+    # 3) 'Max_Pool': compute max of neighboring pixels
     # ds_methods = ['No_Pool','Avg_Pool','Max_Pool']
     ds_methods = ['Avg_Pool']
     downsample = True #(set to false for 'avg')
     ds_factor = 8
     
-    #Adjust clustering measures for chance (set to metrics based on pairwise confusion matrix)
-    adjusted=True
-    
+
     #Set to False to use feature value in SP as weights for EMD
     equal_weight = False 
-    
-    #Set False to use median as preference or True to set to percentage of root SPs
-    set_preferences = False 
-    
+
     #Scale on spatial coordinates
     alpha = 1 
-    
-    #Number of test images to visualize (26 in total)
-    num_imgs = 5 
     
     #Seed for Random state for TSNE, Clustering and Metrics (should only affect
     # root visualization and not clustering performance)
     #Embedding method to be used, select either 1) 'TSNE', 2) 'UMAP', 3) 'ISOMAP', 
-    # 4) 'LLE' or 5) 'MDS'
+    # 4) 'LLE' or 5) 'MDS' (recommended)
     # Note: If 'UMAP' is used, can run supervised version of 'UMAP' for different labels
-    # Current options are 1) 'Cluster', 2) 'Cultivar', 3) 'Water', 4) 'Cross_Treatments
-    # 5) 'Unsupervised'
+    # Current options are 1) 'Cultivar', 2) 'Water', 3) 'Cross_Treatments
+    # 4) 'Unsupervised'
     # All other methods are unsupervised (set label_types to 'Unsupervised' 
     # only for these methods)
     seed = 42
@@ -124,11 +113,10 @@ def Parameters():
     return {'csv_dir': csv_dir, 'img_dir': img_dir, 'results_folder': results_folder,
             'run_nums': run_nums, 'train_reps': train_reps, 'test_reps': test_reps,
             'SP_min': SP_min, 'SP_step': SP_step, 'SP_max': SP_max, 'mode': mode,
-            'DAP': DAP, 'preprocess': preprocess, 'features': features, 
+            'preprocess': preprocess, 'features': features, 
             'labels': labels, 'norm_method': norm_method, 'ds_methods': ds_methods,
-            'downsample': downsample, 'ds_factor': ds_factor, 'adjusted': adjusted,
-            'equal_weight': equal_weight, 'set_preferences': set_preferences,
-            'alpha': alpha, 'num_imgs': num_imgs, 'seed': seed, 'embed': embed,
+            'downsample': downsample, 'ds_factor': ds_factor, 'equal_weight': equal_weight,
+            'alpha': alpha, 'seed': seed, 'embed': embed,
             'label_types': label_types, 'vis_fig_type': vis_fig_type, 
             'score_metric': score_metric, 'num_neighbors': num_neighbors, 
             'split_data': split_data, 'root_only': root_only, 
