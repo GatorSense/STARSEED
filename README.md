@@ -49,8 +49,6 @@ https://github.com/GatorSense/EMD_Root_Architecture
         ├── TubeNumberKey.csv  // Contains information about root data (repetition, tube number, etc.) 
     ├── demo.py   //Run this. Main file to analyze root architectures.
     ├── Parameters.py // Parameters file for main script.
-    ├── Interactive_Visual_MU.py // Interactive visual to show embedding of root images (need to update).
-    ├── Papers  // Links to related publications (will post our paper here).
     └── Utils  //utility functions
         ├── Compute_EMD.py  // Compute Earth Mover's  (EMD) between two image signatures.
         ├── Compute_fractal_dim.py  // Compute fractal and lacunarity features.
