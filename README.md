@@ -1,4 +1,4 @@
-# Computer Engineering for in-Depth Characterization of Early Root Architecture: example on Sesamum indicum using Earth Mover’s Distance 
+# Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance (STARRED) 
 
 
 In this repository, we provide the paper (TBD) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
@@ -67,19 +67,19 @@ This source code is licensed under the license found in the [`LICENSE`](LICENSE)
 
 This product is Copyright (c) 2021 J. Peeples, W. Xu, R. Gloaguen, D. Rowland, A. Zare, and Z. Brym. All rights reserved.
 
-## <a name="CitingHist"></a>Citing EMD Analysis Approach
+## <a name="CitingHist"></a>Citing STARRED
 
 If you use the analysis code, please cite the following reference using the following entry.
 
 **Plain Text**
 
 Peeples, J., Xu, W., Gloaguen, R., Rowland, D., Zare, A., and Brym, Z. (2021). 
-Computer Engineering for in-Depth Characterization of Root Architecture: example on Sesamum indicum using Earth Mover's Distance
+Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance(STARRED).
 
 **BibTex (TBD)**
 ```
-@article{peeples2021computer,
-  title={Computer Engineering for in-Depth Characterization of Root Architecture: example on Sesamum indicum using Earth Mover's Distance},
+@article{peeples2021Spatial,
+  title={Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance(STARRED)},
   author={Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane, and Zare, Alina and Brym, Zachary},
   journal={},
   year={2021}
