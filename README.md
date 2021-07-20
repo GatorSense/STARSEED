@@ -74,7 +74,7 @@ If you use the analysis code, please cite the following reference using the foll
 **Plain Text**
 
 Peeples, J., Xu, W., Gloaguen, R., Rowland, D., Zare, A., and Brym, Z. (2021). 
-Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance(STARRED).
+Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance (STARRED).
 
 **BibTex (TBD)**
 ```
