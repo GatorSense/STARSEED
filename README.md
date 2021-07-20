@@ -1,4 +1,4 @@
-# Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance (STARRED) 
+# Spatial and Texture Analysis of Root System architEcture with Earth mover's Distance (STARSEED)
 
 
 In this repository, we provide the paper (TBD) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
@@ -74,12 +74,12 @@ If you use the analysis code, please cite the following reference using the foll
 **Plain Text**
 
 Peeples, J., Xu, W., Gloaguen, R., Rowland, D., Zare, A., and Brym, Z. (2021). 
-Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance (STARRED).
+Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance (STARSEED).
 
 **BibTex (TBD)**
 ```
 @article{peeples2021Spatial,
-  title={Spatial and Texture Analysis of Root System Architecture with Earth mover’s Distance(STARRED)},
+  title={Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance(STARSEED)},
   author={Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane, and Zare, Alina and Brym, Zachary},
   journal={},
   year={2021}
