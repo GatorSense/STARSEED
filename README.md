@@ -38,7 +38,7 @@ The parameters can be set in the following script:
 ## Inventory
 
 ```
-https://github.com/GatorSense/EMD_Root_Architecture
+https://github.com/GatorSense/STARSEED
 
 └── root dir
     ├── Data   //Folder that contains root images, please be sure data is in correct format.
