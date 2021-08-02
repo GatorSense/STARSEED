@@ -274,7 +274,7 @@ def SP_clustering(dataset,numSP=250,mode='bw',num_imgs=1,
 
         time_elapsed = time.time() - start
         
-        print('Clustering finished in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
+        print('EMD Scoring and Visualization finished in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
         
         # return outputs: EMD score index and labels
         return EMD_scores, labels
