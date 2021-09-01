@@ -76,7 +76,7 @@ If you use the analysis code, please cite the following reference using the foll
 Peeples, J., Xu, W., Gloaguen, R., Rowland, D., Zare, A., and Brym, Z. (2021). 
 Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance (STARSEED).
 
-**BibTex (TBD)**
+**BibTex**
 ```
 @article {Peeples2021.08.31.458446,
 	author = {Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane and Zare, Alina and Brym, Zachary},
