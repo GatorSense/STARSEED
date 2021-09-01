@@ -1,7 +1,7 @@
 # Spatial and Texture Analysis of Root System architEcture with Earth mover's Distance (STARSEED)
 
 
-In this repository, we provide the paper (TBD) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
+In this repository, we provide the [`paper`](https://www.biorxiv.org/content/10.1101/2021.08.31.458446v1) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
 
 ## Installation Prerequisites
 
@@ -78,11 +78,16 @@ Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Di
 
 **BibTex (TBD)**
 ```
-@article{peeples2021Spatial,
-  title={Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance(STARSEED)},
-  author={Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane, and Zare, Alina and Brym, Zachary},
-  journal={},
-  year={2021}
+@article {Peeples2021.08.31.458446,
+	author = {Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane and Zare, Alina and Brym, Zachary},
+	title = {Spatial and Texture Analysis of Root System Architecture with Earth Mover{\textquoteright}s Distance},
+	elocation-id = {2021.08.31.458446},
+	year = {2021},
+	doi = {10.1101/2021.08.31.458446},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2021/09/01/2021.08.31.458446},
+	eprint = {https://www.biorxiv.org/content/early/2021/09/01/2021.08.31.458446.full.pdf},
+	journal = {bioRxiv}
 }
 ```
 
