@@ -11,7 +11,7 @@ Please use [`Anaconda's OpenCV`](https://anaconda.org/conda-forge/opencv) to dow
 ## Main Script to run
 
 Run `demo.py` in Python IDE (e.g., Spyder) or command line.
-Results are saved out in figures and excel spreadsheets
+Results are saved out in figures and excel spreadsheets.
 
 ## Main Functions
 
