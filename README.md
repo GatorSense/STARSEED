@@ -67,7 +67,7 @@ This source code is licensed under the license found in the [`LICENSE`](LICENSE)
 
 This product is Copyright (c) 2021 J. Peeples, W. Xu, R. Gloaguen, D. Rowland, A. Zare, and Z. Brym. All rights reserved.
 
-## <a name="CitingHist"></a>Citing STARRED
+## <a name="CitingHist"></a>Citing STARSEED
 
 If you use the analysis code, please cite the following reference using the following entry.
 
@@ -78,16 +78,12 @@ Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Di
 
 **BibTex**
 ```
-@article {Peeples2021.08.31.458446,
-	author = {Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane and Zare, Alina and Brym, Zachary},
-	title = {Spatial and Texture Analysis of Root System Architecture with Earth Mover{\textquoteright}s Distance},
-	elocation-id = {2021.08.31.458446},
-	year = {2021},
-	doi = {10.1101/2021.08.31.458446},
-	publisher = {Cold Spring Harbor Laboratory},
-	URL = {https://www.biorxiv.org/content/early/2021/09/01/2021.08.31.458446},
-	eprint = {https://www.biorxiv.org/content/early/2021/09/01/2021.08.31.458446.full.pdf},
-	journal = {bioRxiv}
+@article{peeples2021spatial,
+  title={Spatial and Texture Analysis of Root System Architecture with Earth Mover's Distance},
+  author={Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane and Zare, Alina and Brym, Zachary},
+  journal={bioRxiv},
+  year={2021},
+  publisher={Cold Spring Harbor Laboratory}
 }
 ```
 
