@@ -1,7 +1,7 @@
 # Spatial and Texture Analysis of Root System architEcture with Earth mover's Distance (STARSEED)
 
 
-In this repository, we provide the [`paper`](https://www.biorxiv.org/content/10.1101/2021.08.31.458446v1) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis. GatorSense/STARSEED: Initial Release (Version v1.0). [`Zenodo`](https://doi.org/10.5281/zenodo.5364355) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5364355.svg)](https://doi.org/10.5281/zenodo.5364355)
+In this repository, we provide the [`paper`](https://www.biorxiv.org/content/10.1101/2021.08.31.458446v3) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis. GatorSense/STARSEED: Initial Release (Version v1.0). [`Zenodo`](https://doi.org/10.5281/zenodo.5364355) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5364355.svg)](https://doi.org/10.5281/zenodo.5364355)
 
 ## Installation Prerequisites
 
