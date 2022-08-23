@@ -1,7 +1,7 @@
-# Spatial and Texture Analysis of Root System architEcture with Earth mover's Distance (STARSEED)
+# Spatial and Texture Analysis of Root SystEm distribution with Earth mover’s Distance (STARSEED)
 
 
-In this repository, we provide the [`paper`](https://www.biorxiv.org/content/10.1101/2021.08.31.458446v3) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis. GatorSense/STARSEED: Initial Release (Version v1.0). [`Zenodo`](https://doi.org/10.5281/zenodo.5364355) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5364355.svg)](https://doi.org/10.5281/zenodo.5364355)
+In this repository, we provide the [`paper`](https://www.biorxiv.org/content/10.1101/2021.08.31.458446v3) and code for our analysis approach using Earth Mover's Distance (EMD) for root sytem distribution analysis. GatorSense/STARSEED: Initial Release (Version v1.0). [`Zenodo`](https://doi.org/10.5281/zenodo.5364355) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5364355.svg)](https://doi.org/10.5281/zenodo.5364355)
 
 ## Installation Prerequisites
 
@@ -50,7 +50,7 @@ https://github.com/GatorSense/STARSEED
     ├── demo.py   //Run this. Main file to analyze root architectures.
     ├── Parameters.py // Parameters file for main script.
     └── Utils  //utility functions
-        ├── Compute_EMD.py  // Compute Earth Mover's  (EMD) between two image signatures.
+        ├── Compute_EMD.py  // Compute Earth Mover's (EMD) between two image signatures.
         ├── Compute_fractal_dim.py  // Compute fractal and lacunarity features.
         ├── Load_data.py  // Load root images from Data directory.
         ├── EMD_Clustering.py  // Generate embeddings of images based on EMD and return scores.
@@ -74,12 +74,12 @@ If you use the analysis code, please cite the following reference using the foll
 **Plain Text**
 
 Peeples, J., Xu, W., Gloaguen, R., Rowland, D., Zare, A., and Brym, Z. (2021). 
-Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance (STARSEED).
+Spatial and Texture Analysis of Root SystEm distribution with Earth mover’s Distance (STARSEED).
 
 **BibTex**
 ```
 @article{peeples2021spatial,
-  title={Spatial and Texture Analysis of Root System Architecture with Earth Mover's Distance},
+  title={Spatial and Texture Analysis of Root SystEm distribution with Earth mover’s Distance},
   author={Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane and Zare, Alina and Brym, Zachary},
   journal={bioRxiv},
   year={2021},
