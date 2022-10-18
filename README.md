@@ -5,7 +5,7 @@ In this repository, we provide the [`paper`](https://www.biorxiv.org/content/10.
 
 ## Installation Prerequisites
 
-This code uses python (v3.7.6) and OpenCV. 
+This code uses python (v3.7.6), OpenCV, and natsort. 
 Please use [`Anaconda's OpenCV`](https://anaconda.org/conda-forge/opencv) to download necessary packages.
 
 ## Main Script to run
