@@ -1,7 +1,7 @@
 # Spatial and Texture Analysis of Root System architEcture with Earth mover's Distance (STARSEED)
 
 
-In this repository, we provide the paper (TBD) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
+In this repository, we provide the paper and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
 
 ## Installation Prerequisites
 
