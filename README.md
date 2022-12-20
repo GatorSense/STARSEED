@@ -68,7 +68,7 @@ This source code is licensed under the license found in the [`LICENSE`](LICENSE)
 
 This product is Copyright (c) 2021 J. Peeples, W. Xu, R. Gloaguen, D. Rowland, A. Zare, and Z. Brym. All rights reserved.
 
-## <a name="CitingHist"></a>Citing STARRED
+## <a name="CitingHist"></a>Citing STARSEED
 
 If you use the analysis code, please cite the following reference using the following entry.
 
