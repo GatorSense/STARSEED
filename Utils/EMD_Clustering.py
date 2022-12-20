@@ -122,6 +122,7 @@ def plot_components(data, proj, images=None, ax=None,
         
             #Img sizes varied from (112,112) to (56,56) to (64,64)
             if vis_fig_type == 'Image':
+                #TBD (add label color for roots)
                 imagebox = offsetbox.AnnotationBbox(
                     offsetbox.OffsetImage(resize(images[i]['Img'],(64,64)),
                                           zoom=.9, cmap=cmap),proj[i])
@@ -232,14 +233,14 @@ def Generate_EMD_Clustering(EMD_mat,images,cultivar_labels,
     xy = embedding[np.arange(len(cultivar_labels))]
     plot_true_label(xy, images, cultivar_labels, 
                     saveout=folder+embed+'_Cultivar_True_Labels.png', 
-                    fig_dist=4e-2, title='Cultivar True Labels ' + str(numSP) + ' Superpixels',
+                    fig_dist=.15, title='Cultivar True Labels ' + str(numSP) + ' Superpixels',
                     vis_fig_type=vis_fig_type)
     
     xy = embedding[np.arange(len(water_level_labels))]
     plot_true_label(xy, images, water_level_labels, 
                     saveout=folder+embed+'_Water_Levels_True_Labels.png', 
-                    fig_dist=4e-2, title='Water Levels True Labels ' + str(numSP) + ' Superpixels',
-                    vis_fig_type=vis_fig_type)
+                    fig_dist=.15, title='Water Levels True Labels ' + str(numSP) + ' Superpixels',
+                    vis_fig_type=vis_fig_type,water = True)
     
     fig3, ax3 = plt.subplots(1,1)
     plt.subplots_adjust(right=.75)

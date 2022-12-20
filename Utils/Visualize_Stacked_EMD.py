@@ -80,7 +80,8 @@ def Stack_EMD_Visual(data,labels,folder,feature,class_names=None,root_only=True,
             temp_EMD, temp_flow = compute_EMD(stack_data[class_stack]['SP_profile'],stack_data[temp_class]['SP_profile'])
             EMD_class_scores.append(temp_EMD)
             EMD_class_flows.append(temp_flow)
-         
+  
+        #Visualize images with magnitude and directional arrows
         Visualize_EMD(stack_data[class_stack],np.array(stack_data)[temp_indices],
                       EMD_class_scores,EMD_class_flows,folder,center_treatments[class_stack],
                       label_type, num_class=n_clusters_-1,

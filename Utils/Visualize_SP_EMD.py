@@ -26,7 +26,6 @@ def Visualize_EMD(test_img,train_imgs,EMD_scores,SP_flow, folder,test_label,img_
     red channel and the second in the green. Arrows are
     overplotted to show moved earth, with arrow thickness
     indicating the amount of moved earth."""
-    # pdb.set_trace()
     fig, ax = plt.subplots(2,num_class+1,figsize=(24,12))
     plt.subplots_adjust(wspace=.4,hspace=.4)
     
@@ -51,7 +50,6 @@ def Visualize_EMD(test_img,train_imgs,EMD_scores,SP_flow, folder,test_label,img_
     ax[1,0].set_xticks(y_pos)
     ax[1,0].set_xticklabels(class_names,rotation=90)
     ax[1,0].patches[np.argmin(EMD_scores)].set_facecolor('#aa3333')
-    # ax[1,0].set_title('EMD Class Scores: \n' + str(class_names[np.argmin(EMD_scores)])
     ax[1,0].set_title('EMD Class Scores: ')
     ax[1,0].set_xlabel('(e)', fontsize=20)
     for current_class in range(0,num_class):
@@ -61,18 +59,9 @@ def Visualize_EMD(test_img,train_imgs,EMD_scores,SP_flow, folder,test_label,img_
         #Just show root image
         if sp_overlay:
             if lab:
-                # SP_mask = train_imgs[current_class]['SP_mask'][:,:,0]
-                # ax[0,current_class+1].imshow(mark_boundaries(train_imgs[current_class]['Img'],
-                #                               SP_mask,color=(1,1,0)), aspect="auto")
-
                 ax[0,current_class+1].imshow(train_imgs[current_class]['Img'],
                                                   aspect="auto",cmap=cmap)
-
-                    
             else:
-                # SP_mask = train_imgs[current_class]['SP_mask']
-                # ax[0,current_class+1].imshow(mark_boundaries(train_imgs[current_class]['Img'],
-                #                               SP_mask,color=(1,1,0)), aspect="auto",cmap=cmap) 
                 ax[0,current_class+1].imshow(train_imgs[current_class]['Img'],
                                               aspect="auto",cmap=cmap)
 
@@ -105,8 +94,7 @@ def Visualize_EMD(test_img,train_imgs,EMD_scores,SP_flow, folder,test_label,img_
             flow = SP_flow[current_class]
         
         flows = np.transpose(np.nonzero(flow))
-        # pdb.set_trace()
-        
+      
         # Plot selected top-K flows 
         mags = [] 
         srcs = [] 
@@ -118,7 +106,6 @@ def Visualize_EMD(test_img,train_imgs,EMD_scores,SP_flow, folder,test_label,img_
             # start = test_img['SP_profile'][src, 1:][::-1]
             start = test_img['SP_profile'][src,-2::][::-1]
             try: #Indexing issue with last image, need to check later
-                # end = train_imgs[current_class]['SP_profile'][dest, 1:][::-1]
                 end = train_imgs[current_class]['SP_profile'][dest,-2::][::-1]
                 if np.all(start == end):
                     # Unmoved earth shows up as a "flow" from a pixel
@@ -158,67 +145,18 @@ def Visualize_EMD(test_img,train_imgs,EMD_scores,SP_flow, folder,test_label,img_
                             headlength=5,
                             headwidth=3,
                             headaxislength=4.5)
-                # ax[1,current_class+1].quiver(*start, *(end - start), angles='xy',
-                #             scale_units='xy', color='white', edgecolor='black',
-                #             linewidth=mag/4,
-                #             units='dots', width=mag/2)
             except:
                 pass
-        
-# =============================================================================
-#         for src, dest in flows:
-#             # Skip the pixel value in the first element, grab the
-#             # coordinates. It'll be useful later to transpose x/y.
-#             # start = test_img['SP_profile'][src, 1:][::-1]
-#             start = test_img['SP_profile'][src,-2::][::-1]
-#             try: #Indexing issue with last image, need to check later
-#                 # end = train_imgs[current_class]['SP_profile'][dest, 1:][::-1]
-#                 end = train_imgs[current_class]['SP_profile'][dest,-2::][::-1]
-#                 if np.all(start == end):
-#                     # Unmoved earth shows up as a "flow" from a pixel
-#                     # to that same exact pixel---don't plot mini arrows
-#                     # for those pixels
-#                     continue
-#                 
-#                 # Add a random shift to arrow positions to reduce overlap.
-#                 shift = np.random.random(1) * .3 - .15
-#                 start = start + shift
-#                 end = end + shift
-#                 
-#                 #Took log here because some values were large (could not plot
-#                 #arrows properly)
-#                 mag = np.log(flow[src, dest]+1) * arrow_width_scale
-#                 # mag = flow[src, dest]*arrow_width_scale
-#                 ax[1,current_class+1].quiver(*start, *(end - start), angles='xy',
-#                             scale_units='xy', scale=1, color='white',
-#                             edgecolor='black', linewidth=mag/3,
-#                             width=mag, units='dots',
-#                             headlength=5,
-#                             headwidth=3,
-#                             headaxislength=4.5)
-#             except:
-#                 pass
-# =============================================================================
-        
-        # ax[1,current_class+1].axis('off')
+    
         ax[1,current_class+1].tick_params(axis='both', labelsize= 0, length = 0)
         ax[1,current_class+1].set_xlabel('(%s)'%(chr(current_class+4+98)), fontsize=20)
         if class_names is not None:
             if stacked:
                 ax[1,current_class+1].set_title(str(test_label)+ " to " + 
                                                 str(class_names[current_class]))
-                # ax[1,current_class+1].set_title(str(class_names[current_class])+ " to " + 
-                #                                 str(test_label))
             else:
                 ax[1,current_class+1].set_title(img_name+ " to \n" + 
                                                 str(train_imgs_names[current_class]))
-     
-    # if stacked:  
-    #     plt.figtext(0.5, 0.02, 'Red channel is current class; green channel is other class; yellow means "unchanged"', 
-    #                     ha="center", fontsize=12, bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
-    # else:
-    #     plt.figtext(0.5, 0.02, 'Red channel is test image; green channel is cluster center; yellow means "unchanged"', 
-    #                 ha="center", fontsize=12, bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
     
     if sp_overlay:
         folder = folder +'/Root_Images/' 

@@ -4,17 +4,14 @@ Created on Tue Feb 25 17:08:19 2020
 Load training and test images
 @author: jpeeples
 """
-import pdb
 import pandas as pd
 import os
 import natsort
 from PIL import Image
 import numpy as np
-import matplotlib.pyplot as plt
 import time
 import skimage.measure
 from scipy.ndimage import gaussian_filter
-import pdb
 
 def extract_features(X,preprocess = 'avg',mode='rgb'):
 

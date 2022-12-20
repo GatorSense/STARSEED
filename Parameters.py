@@ -12,11 +12,11 @@ def Parameters():
     img_dir = './Data/'
     
     #Directory desired for results
-    results_folder = 'Results/'
+    results_folder = 'Results/Test_Viz/'
     
     #Run numbers for root imagery
-    #Runs 4&5 are roots without fertilizer and Runs 6&7 are with fertilizer
-    run_nums = [1,2] 
+    #Runs 1&2 are roots without fertilizer and Runs 3&4 are with fertilizer
+    run_nums = [3,4] 
     
     #Pick repetitions to train and test on (total of four runs, 1 to 4)
     train_reps = [1,2,3]
@@ -28,7 +28,7 @@ def Parameters():
     #SP_max: largest number of super pixels to consider
     SP_min = 100
     SP_step = 100
-    SP_max = 2000
+    SP_max = 500
     
     #Set data type, can run code on 'rgb' or 'bw' ('bw' is recommended, binary data)
     mode = 'bw' 
@@ -40,7 +40,7 @@ def Parameters():
     
     #Either use 'root_pixels','fractal', 'lacunarity', all' (use all three texture features
     #at once)
-    features = ['root_pixels', 'fractal', 'lacunarity']
+    features = ['root_pixels','fractal','lacunarity']
     
     #Set labels of interest, currently have for labels:
     # 1) Cultivar, 2) Water Levels, 3) Cross Treatments (Cultivar and Water Levels),

@@ -18,6 +18,7 @@ from skimage.transform import resize
 from Utils.Compute_fractal_dim import fractal_dimension
 import os
 import pdb
+from sklearn import preprocessing
 
 
     
@@ -207,45 +208,59 @@ def plot_ori_clusters(dataset, water_level=None, cultivar=None):
         plt.show()
 
 def plot_true_label(X, images, labels, saveout, fig_dist=4e-2, 
-                    embed_images=True, title=None, vis_fig_type='Image'):
+                    embed_images=True, title=None, vis_fig_type='Image',
+                    water = False):
     temp_labels = np.copy(np.array(labels))
     x_min, x_max = np.min(X, 0), np.max(X, 0)
-    X = (X - x_min) / (x_max - x_min)
     class_names = np.unique(temp_labels).tolist()
+    
+    #If Water Levels, convert labels to percentages
+    if water:
+        for level in range(0,len(class_names)):
+            class_names[level] = '{}%'.format(class_names[level]*100)
+            
+    le = preprocessing.LabelEncoder()
+    labels_encoded = le.fit_transform(labels)
     colors = colormap.rainbow(np.linspace(0, 1, len(class_names)))
     count = 0
     
-    plt.figure(figsize=(20,10))
+    # plt.figure(figsize=(20,10))
+    plt.figure(figsize=(14,7))
     ax1 = plt.subplot(111)
     for treatment in class_names:
-        plt.scatter(X[np.where(temp_labels==treatment),0], X[np.where(temp_labels==treatment),1], 
+        fig_ax = ax1.scatter([],[], 
                     color = colors[count,:], label=class_names[count])
         count += 1
     
     plt.legend(class_names, bbox_to_anchor=(1.04, 1), loc='upper left')
+    plt.xlim(np.min(x_min)-10,np.max(x_max)+10)
+    plt.ylim(np.min(x_min)-10,np.max(x_max)+10)
     
     if embed_images:
         if hasattr(offsetbox, 'AnnotationBbox'):
-            # only print thumbnails with matplotlib > 1.0
-            shown_images = np.array([[1., 1.]])  # just something big
+            min_dist_2 = (fig_dist * max(X.max(0) - X.min(0))) ** 2
+            shown_images = np.array([2 * X.max(0)])
             for i in range(X.shape[0]):
                 dist = np.sum((X[i] - shown_images) ** 2, 1)
-                if np.min(dist) < fig_dist:
+                if np.min(dist) < min_dist_2:
                     # don't show points that are too close
                     continue
                 shown_images = np.r_[shown_images, [X[i]]]
                 if vis_fig_type == 'Image':
                     imagebox = offsetbox.AnnotationBbox(
-                        offsetbox.OffsetImage(resize(images[i]['Img'], (256,256)), 
-                                              cmap=plt.cm.gray_r, zoom=0.2), X[i])
+                        offsetbox.OffsetImage(resize(images[i]['Img'], (64,64)), 
+                                              cmap=plt.cm.gray_r, zoom=0.9), X[i],
+                                bboxprops =dict(edgecolor=colors[labels_encoded[i],:]))
                 if vis_fig_type == 'Feature':
                     imagebox = offsetbox.AnnotationBbox(
-                        offsetbox.OffsetImage(resize(images[i]['Root_mask'], (256,256)), 
-                                                     zoom=0.2), X[i])
+                        offsetbox.OffsetImage(resize(images[i]['Root_mask'], (64,64)), 
+                                                     zoom=0.9), X[i],
+                        bboxprops =dict(edgecolor=colors[labels_encoded[i],:]))
                 ax1.add_artist(imagebox)
-    plt.xticks([]), plt.yticks([])
-    if title is not None:
-        plt.title(title)
+     
+    plt.xlabel('MDS Component 1',fontsize=16)
+    plt.ylabel('MDS Component 2',fontsize=16)
+    plt.tight_layout()
     if saveout is not None:
         plt.savefig((saveout), dpi=300)
     plt.close()

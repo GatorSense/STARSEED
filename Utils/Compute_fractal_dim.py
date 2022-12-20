@@ -105,7 +105,7 @@ def lacunarity(counts):
 # Keller, J. M., Chen, S., & Crownover, R. M. (1989). Texture description and 
 # segmentation through fractal geometry. Computer Vision, Graphics, and image 
 # processing, 45(2), 150-166.
-#Using Mendelbrot's definition (may use Keller's definition)
+#Using Mendelbrot's definition 
     #Convert counts from list to array
     counts = np.array(counts)
 
@@ -113,17 +113,11 @@ def lacunarity(counts):
     totals = np.sum(counts) + 10e-6 #Avoid division by 0
     probs = counts/totals
     
-    #Compute N(L)
-    # N = np.sum((1/counts)*probs)
-    
     #Compute first and second moments
     M1 = np.sum(counts*probs)
     M2 = np.sum((counts**2)*probs)
     
     #Compute lacunarity feature (Mendelbrot)
     lac_val = (M2-M1**2)/((M1**2)+10e-6)
-    
-    #Compute lacunarity feature (Keller) (for Runs 4&5, performed slightly less for SI)
-    # lac_val = (M1 - N) / (M1 + N)
  
     return lac_val
