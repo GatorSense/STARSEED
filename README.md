@@ -1,7 +1,7 @@
 # Spatial and Texture Analysis of Root System architEcture with Earth mover's Distance (STARSEED)
 
 
-In this repository, we provide the paper and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
+In this repository, we provide the [paper](https://plantmethods.biomedcentral.com/articles/10.1186/s13007-022-00974-z) and code for our analysis approach using Earth Mover's Distance (EMD) for root architeture analysis.
 
 ## Installation Prerequisites
 
@@ -66,7 +66,7 @@ https://github.com/GatorSense/STARSEED
 
 This source code is licensed under the license found in the [`LICENSE`](LICENSE) file in the root directory of this source tree.
 
-This product is Copyright (c) 2021 J. Peeples, W. Xu, R. Gloaguen, D. Rowland, A. Zare, and Z. Brym. All rights reserved.
+This product is Copyright (c) 2023 J. Peeples, W. Xu, R. Gloaguen, D. Rowland, A. Zare, and Z. Brym. All rights reserved.
 
 ## <a name="CitingHist"></a>Citing STARSEED
 
@@ -74,16 +74,17 @@ If you use the analysis code, please cite the following reference using the foll
 
 **Plain Text**
 
-Peeples, J., Xu, W., Gloaguen, R., Rowland, D., Zare, A., and Brym, Z. (2021). 
-Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance (STARSEED).
+J. Peeples, W. Xu, R. Gloaguen, D. Rowland, A. Zare, and Z. Brym, “Spatial and Texture Analysis of Root System Distri‑
+bution with Earth Mover’s Distance (STARSEED),” in Plant Methods 19, 2023. doi: 10.1186/s13007‑022‑00974‑z.
 
 **BibTex**
 ```
-@article{peeples2021Spatial,
+@article{peeples2023Spatial,
   title={Spatial and Texture Analysis of Root System Architecture with Earth Mover’s Distance(STARSEED)},
   author={Peeples, Joshua and Xu, Weihuang and Gloaguen, Romain and Rowland, Diane, and Zare, Alina and Brym, Zachary},
-  journal={},
-  year={2021}
+  journal={Plant Methods 19},
+  year={2023},
+  doi= {10.1186/s13007‑022‑00974‑z}
 }
 ```
 
